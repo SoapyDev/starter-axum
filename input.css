@@ -1,1 +1,44 @@
+/*
+    Fonts
+*/
+
+
+/*
+    Tailwindcss
+*/
 @import 'tailwindcss';
+
+/*
+    Custom theme
+*/
+@theme {}
+
+/*
+    Layer order
+*/
+@layer default, layouts, components, utilities, super;
+
+/*
+    Default styles
+*/
+@layer defaults {}
+
+/*
+    Layout styles
+*/
+@layer layouts {}
+
+/*
+    Component styles
+*/
+@layer components {}
+
+/*
+    Utility styles
+*/
+@layer utilities {}
+
+/*
+    Super styles will overide everything if needed
+*/
+@layer super {}
