@@ -1,0 +1,5 @@
+[rustfmt]
+overrideCommand = ["leptosfmt", "--stdin"]
+
+[cargo]
+features = "all"
