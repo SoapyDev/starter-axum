@@ -1,5 +1,6 @@
 mod app;
 mod telemetry;
+mod config;
 
 
 #[cfg(feature = "ssr")]
@@ -11,15 +12,24 @@ async fn main() {
     use leptos_axum::{generate_route_list, LeptosRoutes};
     use app::*;
     use telemetry::ssr::{get_subscriber, init_subscriber};
+    use config::ssr::get_configuration;
 
-    // Logging
-    let subscriber = get_subscriber("Log".into(), "info".into(), std::io::stdout);
+    // Configuration
+    let settings = get_configuration().expect("Failed to read configuration.");
+    let conf = leptos::prelude::get_configuration(None).expect("Failed to read leptos configuration.");
+
+    // Tracing
+    let log_level = settings.tracing_level.clone();
+    let subscriber = get_subscriber("Log".into(), log_level, std::io::stdout);
     init_subscriber(subscriber);
+    tracing::debug!("Configuration loaded : {:?}", settings);
 
+    // Setup
+    let mut leptos_options = conf.leptos_options;
+    let port = settings.application.port;
+    leptos_options.site_addr.set_port(port);
+    let addr = leptos_options.site_addr;
 
-    let conf = get_configuration(None).unwrap();
-    let addr = conf.leptos_options.site_addr;
-    let leptos_options = conf.leptos_options;
     // Generate the list of routes in your Leptos App
     let routes = generate_route_list(App);
 
@@ -31,13 +41,12 @@ async fn main() {
         .fallback(leptos_axum::file_and_error_handler(shell))
         .with_state(leptos_options);
 
-    // run our app with hyper
-    // `axum::Server` is a re-export of `hyper::Server`
-    log!("listening on http://{}", &addr);
-    let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
+    // Run our app with hyper
+    tracing::info!("listening on http://{}", &addr);
+    let listener = tokio::net::TcpListener::bind(&addr).await.expect("Failed to bind to address");
     axum::serve(listener, app.into_make_service())
         .await
-        .unwrap();
+        .expect("Failed to start server");
 }
 
 #[cfg(not(feature = "ssr"))]

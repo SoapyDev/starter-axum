@@ -24,6 +24,22 @@ tracing-subscriber = { version = "0.3", optional = true, features = ["env-filter
 tracing-log = { version = "0.2", optional = true }
 tracing-bunyan-formatter = { version = "0.3", optional = true }
 
+# Configuration
+dotenvy = { version = "0.15", optional = true }
+config = { version = "0.15", optional = true }
+
+# Serialization
+serde-aux = { version = "4.7", optional = true }
+serde = { version = "1.0", default-features = false, features = [
+    "derive",
+    "std",
+] }
+
+# Security
+secrecy = { version = "0.10", features = ["serde"], optional = true }
+jsonwebtoken = { version = "9.3", optional = true }
+
+
 
 [features]
 hydrate = [
@@ -40,6 +56,11 @@ ssr = [
     "dep:tracing-bunyan-formatter",
     "dep:tracing-subscriber",
     "dep:tracing-log",
+    "dep:dotenvy",
+    "dep:config",
+    "dep:serde-aux",
+    "dep:jsonwebtoken",
+    "dep:secrecy",
     "leptos/ssr",
     "leptos_meta/ssr",
     "leptos_router/ssr",

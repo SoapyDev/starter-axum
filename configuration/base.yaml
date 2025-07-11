@@ -1,0 +1,8 @@
+application:
+    port: 3000
+    host: "0.0.0.1"
+    hmac_secret: "92#Ttjs#8f72a825TJgRYQ^t*NYiX92KG$E#eaGukw4o2MzTj&LDZEHW57xZPeTWBr&p^LpHs5U5JXKXa!z##Dk4NdxYL4hTtytbsM@dJdDEU#r3A7DPAGh4fP5cbcED" # TO BE REPLACED
+web_uri: "http://127.0.0.1:8000"
+jwt:
+    secret: "92#Ttjs#8f72a825TJgRYQ^t*NYiX92KG$E#eaGukw4o2MzTj&LDZEHW57xZPeTWar&p^LpHs5U5JXKXa!z##Dk3NdxYL4hTtytbsM@dJlDEU#r3A7DPAGh4fP5crcED" # TO BE REPLACED
+    max_age: 604800
