@@ -1,4 +1,5 @@
-pub mod app;
+pub(crate) mod app;
+pub(crate) mod telemetry;
 
 #[cfg(feature = "hydrate")]
 #[wasm_bindgen::prelude::wasm_bindgen]

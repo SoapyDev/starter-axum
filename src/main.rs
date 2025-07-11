@@ -1,3 +1,6 @@
+mod app;
+mod telemetry;
+
 
 #[cfg(feature = "ssr")]
 #[tokio::main]
@@ -6,7 +9,13 @@ async fn main() {
     use leptos::logging::log;
     use leptos::prelude::*;
     use leptos_axum::{generate_route_list, LeptosRoutes};
-    use starter_axum::app::*;
+    use app::*;
+    use telemetry::ssr::{get_subscriber, init_subscriber};
+
+    // Logging
+    let subscriber = get_subscriber("Log".into(), "info".into(), std::io::stdout);
+    init_subscriber(subscriber);
+
 
     let conf = get_configuration(None).unwrap();
     let addr = conf.leptos_options.site_addr;
