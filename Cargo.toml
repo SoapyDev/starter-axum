@@ -37,7 +37,7 @@ serde = { version = "1.0", default-features = false, features = [
 
 # Security
 secrecy = { version = "0.10", features = ["serde"], optional = true }
-jsonwebtoken = { version = "9.3", optional = true }
+jsonwebtoken = { version = "10.3", optional = true }
 
 
 
